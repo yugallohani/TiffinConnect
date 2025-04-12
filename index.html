@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TiffinConnect - Connect with Local Tiffin Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-pattern {
+            background-color: #f3f4f6;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23bfdbfe' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .modal {
+            transition: opacity 0.25s ease;
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+        
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        .custom-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-10 print:relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-2xl font-bold text-blue-600">Tiffin<span class="text-orange-500">Connect</span></span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#home" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Home
+                        </a>
+                        <a href="#how-it-works" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            How It Works
+                        </a>
+                        <a href="#for-providers" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            For Providers
+                        </a>
+                        <a href="#testimonials" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Testimonials
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <button id="login-button" class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <span>Login / Sign Up</span>
+                        </button>
+                    </div>
+                    <div class="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
+                        <button class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <span class="sr-only">View notifications</span>
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars block h-6 w-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="#home" class="bg-blue-50 border-blue-500 text-blue-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                    Home
+                </a>
+                <a href="#how-it-works" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                    How It Works
+                </a>
+                <a href="#for-providers" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                    For Providers
+                </a>
+                <a href="#testimonials" class="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                    Testimonials
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-16 hero-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">Find the Best <span class="text-blue-600">Tiffin</span> Services Near You</h1>
+                    <p class="mt-5 text-xl text-gray-500">Connect with local tiffin providers and enjoy homemade meals delivered right to your doorstep.</p>
+                    
+                    <div class="mt-8 bg-white rounded-lg shadow-lg p-6">
+                        <div class="text-lg font-medium text-gray-900 mb-4">Search for Tiffin Services</div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-map-marker-alt text-gray-400"></i>
+                                    </div>
+                                    <input type="text" name="location" id="location" class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="Enter your address">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="cuisine" class="block text-sm font-medium text-gray-700">Cuisine Type</label>
+                                <select id="cuisine" name="cuisine" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                                    <option value="">All Cuisines</option>
+                                    <option>North Indian</option>
+                                    <option>South Indian</option>
+                                    <option>Gujarati</option>
+                                    <option>Bengali</option>
+                                    <option>Punjabi</option>
+                                    <option>Jain</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="diet" class="block text-sm font-medium text-gray-700">Diet Preference</label>
+                                <select id="diet" name="diet" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                                    <option value="">Any</option>
+                                    <option>Vegetarian</option>
+                                    <option>Vegan</option>
+                                    <option>Non-Vegetarian</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="mt-4 w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Search Tiffin Services
+                        </button>
+                    </div>
+                </div>
+                <div class="md:w-1/2 text-center">
+                    <img src="https://cdn.jsdelivr.net/gh/heroicons/heroicons/optimized/solid/color-swatch.svg" alt="Tiffin Box" class="inline-block w-64 h-64 md:w-96 md:h-96">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Tiffin Services -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Featured Tiffin Services
+                </h2>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+                    Explore some of our top-rated tiffin service providers in your area.
+                </p>
+            </div>
+
+            <div class="mt-12 grid gap-5 max-w-lg mx-auto lg:grid-cols-3 lg:max-w-none">
+                <!-- Tiffin Service 1 -->
+                <div class="flex flex-col rounded-lg shadow-lg overflow-hidden menu-card">
+                    <div class="flex-shrink-0">
+                        <div class="h-48 w-full bg-gradient-to-r from-orange-400 to-pink-500 flex items-center justify-center">
+                            <i class="fas fa-utensils text-white text-5xl"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+                        <div class="flex-1">
+                            <div class="flex justify-between">
+                                <p class="text-sm font-medium text-blue-600">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Vegetarian
+                                    </span>
+                                </p>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <span class="ml-1 text-gray-600">4.8 (120)</span>
+                                </div>
+                            </div>
+                            <a href="#" class="block mt-2">
+                                <p class="text-xl font-semibold text-gray-900">Annapurna Tiffin Services</p>
+                                <p class="mt-3 text-base text-gray-500">Home-style meals cooked with love! Our authentic North Indian meal subscription includes roti, rice, dal, 2 vegetables, and dessert.</p>
+                            </a>
+                        </div>
+                        <div class="mt-6">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-gray-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-gray-500">
+                                        Indiranagar, Bangalore
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div>
+                                    <span class="text-gray-900 font-bold">₹2,500</span>
+                                    <span class="text-gray-500">/month</span>
+                                </div>
+                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tiffin Service 2 -->
+                <div class="flex flex-col rounded-lg shadow-lg overflow-hidden menu-card">
+                    <div class="flex-shrink-0">
+                        <div class="h-48 w-full bg-gradient-to-r from-blue-400 to-indigo-500 flex items-center justify-center">
+                            <i class="fas fa-hamburger text-white text-5xl"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+                        <div class="flex-1">
+                            <div class="flex justify-between">
+                                <p class="text-sm font-medium text-blue-600">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Non-Vegetarian
+                                    </span>
+                                </p>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <span class="ml-1 text-gray-600">4.7 (85)</span>
+                                </div>
+                            </div>
+                            <a href="#" class="block mt-2">
+                                <p class="text-xl font-semibold text-gray-900">Punjab Da Dhaba</p>
+                                <p class="mt-3 text-base text-gray-500">Authentic Punjabi cuisine with both veg and non-veg options. Our meals include roti, rice, dal, a vegetable dish, and a special non-veg curry.</p>
+                            </a>
+                        </div>
+                        <div class="mt-6">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-gray-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-gray-500">
+                                        Koramangala, Bangalore
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div>
+                                    <span class="text-gray-900 font-bold">₹3,200</span>
+                                    <span class="text-gray-500">/month</span>
+                                </div>
+                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tiffin Service 3 -->
+                <div class="flex flex-col rounded-lg shadow-lg overflow-hidden menu-card">
+                    <div class="flex-shrink-0">
+                        <div class="h-48 w-full bg-gradient-to-r from-green-400 to-teal-500 flex items-center justify-center">
+                            <i class="fas fa-seedling text-white text-5xl"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+                        <div class="flex-1">
+                            <div class="flex justify-between">
+                                <p class="text-sm font-medium text-blue-600">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        Keto/Low-Carb
+                                    </span>
+                                </p>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <span class="ml-1 text-gray-600">4.6 (92)</span>
+                                </div>
+                            </div>
+                            <a href="#" class="block mt-2">
+                                <p class="text-xl font-semibold text-gray-900">FitFoodie Tiffins</p>
+                                <p class="mt-3 text-base text-gray-500">Health-focused meals for fitness enthusiasts. Low-carb, high-protein options with calorie count provided. Perfect for your fitness journey.</p>
+                            </a>
+                        </div>
+                        <div class="mt-6">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-gray-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-gray-500">
+                                        HSR Layout, Bangalore
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div>
+                                    <span class="text-gray-900 font-bold">₹3,500</span>
+                                    <span class="text-gray-500">/month</span>
+                                </div>
+                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-10 text-center">
+                <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    View All Tiffin Services
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    How TiffinConnect Works
+                </h2>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+                    Get homemade food delivered to your doorstep in 3 simple steps.
+                </p>
+            </div>
+
+            <div class="mt-16">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+                    <div class="relative">
+                        <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                            <span class="text-lg font-bold">1</span>
+                        </div>
+                        <div class="ml-16">
+                            <h3 class="text-xl font-medium text-gray-900">Search for Tiffin Services</h3>
+                            <p class="mt-2 text-base text-gray-500">
+                                Enter your location, cuisine preferences, and dietary requirements to find the perfect tiffin service for you.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                            <span class="text-lg font-bold">2</span>
+                        </div>
+                        <div class="ml-16">
+                            <h3 class="text-xl font-medium text-gray-900">Choose a Subscription Plan</h3>
+                            <p class="mt-2 text-base text-gray-500">
+                                Compare menus, pricing, and reviews to select a subscription plan that fits your needs - daily, weekly, or monthly.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                            <span class="text-lg font-bold">3</span>
+                        </div>
+                        <div class="ml-16">
+                            <h3 class="text-xl font-medium text-gray-900">Enjoy Fresh Homemade Meals</h3>
+                            <p class="mt-2 text-base text-gray-500">
+                                Pay securely online and get freshly prepared meals delivered to your doorstep according to your subscription.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Provider Section -->
+    <section id="for-providers" class="py-12 bg-blue-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                    Are You a Tiffin Service Provider?
+                </h2>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-blue-100 sm:mt-4">
+                    Join our platform to reach more customers and grow your business.
+                </p>
+            </div>
+
+            <div class="mt-12 bg-white rounded-lg shadow-xl overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-gray-900">Benefits of Joining TiffinConnect</h3>
+                        <ul class="mt-6 space-y-4">
+                            <li class="flex">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span class="ml-3 text-gray-700">Reach thousands of potential customers in your area</span>
+                            </li>
+                            <li class="flex">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span class="ml-3 text-gray-700">Easy-to-use dashboard to manage orders and subscriptions</span>
+                            </li>
+                            <li class="flex">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span class="ml-3 text-gray-700">Secure payment processing with weekly settlements</span>
+                            </li>
+                            <li class="flex">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span class="ml-3 text-gray-700">Marketing tools to showcase your specialties</span>
+                            </li>
+                            <li class="flex">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span class="ml-3 text-gray-700">Customer insights and analytics to improve your services</span>
+                            </li>
+                        </ul>
+                        <div class="mt-8">
+                            <button id="provider-signup-button" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Register as a Provider
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-gray-100 p-8">
+                        <h3 class="text-2xl font-bold text-gray-900">How It Works for Providers</h3>
+                        <div class="mt-6 space-y-6">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                                        <span class="font-bold">1</span>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900">Sign Up & Verification</h4>
+                                    <p class="mt-2 text-base text-gray-600">Complete registration with your business details. Our team will verify your information.</p>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                                        <span class="font-bold">2</span>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900">Set Up Your Profile</h4>
+                                    <p class="mt-2 text-base text-gray-600">Create your menu, set prices, delivery areas, and showcase your specialties.</p>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                                        <span class="font-bold">3</span>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900">Start Receiving Orders</h4>
+                                    <p class="mt-2 text-base text-gray-600">Once approved, you'll start receiving orders from customers in your area.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Provider Dashboard Preview -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Provider Dashboard
+                </h2>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+                    Manage your tiffin service business efficiently with our powerful dashboard.
+                </p>
+            </div>
+
+            <div class="mt-12 bg-gray-100 rounded-lg shadow-md p-6">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                        <button class="dashboard-tab border-blue-500 text-blue-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="orders">
+                            Orders & Subscriptions
+                        </button>
+                        <button class="dashboard-tab border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="menu">
+                            Menu Management
+                        </button>
+                        <button class="dashboard-tab border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="analytics">
+                            Analytics & Insights
+                        </button>
+                        <button class="dashboard-tab border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="settings">
+                            Account Settings
+                        </button>
+                    </nav>
+                </div>
+
+                <div class="mt-6">
+                    <!-- Orders Tab Content -->
+                    <div id="orders-tab" class="tab-content active">
+                        <div class="bg-white shadow overflow-hidden sm:rounded-md">
+                            <ul class="divide-y divide-gray-200">
+                                <li>
+                                    <div class="px-4 py-4 sm:px-6">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0">
+                                                    <i class="fas fa-utensils text-blue-500 text-xl"></i>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-blue-600">
+                                                        Monthly Subscription - Vegetarian Plan
+                                                    </div>
+                                                    <div class="text-sm text-gray-500">
+                                                        Customer: John Doe
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-2 flex-shrink-0 flex">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Active
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 sm:flex sm:justify-between">
+                                            <div class="sm:flex">
+                                                <div class="flex items-center text-sm text-gray-500">
+                                                    <i class="fas fa-calendar-alt flex-shrink-0 mr-1.5 text-gray-400"></i>
+                                                    <p>
+                                                        Started on <time datetime="2020-01-07">Jan 7, 2023</time>
+                                                    </p>
+                                                </div>
+                                                <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
+                                                    <i class="fas fa-clock flex-shrink-0 mr-1.5 text-gray-400"></i>
+                                                    <p>
+                                                        Delivery Time: 12:30 PM - 1:30 PM
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                                <i class="fas fa-map-marker-alt flex-shrink-0 mr-1.5 text-gray-400"></i>
+                                                <p>
+                                                    12/A, Indiranagar, Bangalore
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="px-4 py-4 sm:px-6">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0">
+                                                    <i class="fas fa-utensils text-blue-500 text-xl"></i>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-blue-600">
+                                                        Weekly Subscription - South Indian Plan
+                                                    </div>
+                                                    <div class="text-sm text-gray-500">
+                                                        Customer: Emily Parker
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-2 flex-shrink-0 flex">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Active
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 sm:flex sm:justify-between">
+                                            <div class="sm:flex">
+                                                <div class="flex items-center text-sm text-gray-500">
+                                                    <i class="fas fa-calendar-alt flex-shrink-0 mr-1.5 text-gray-400"></i>
+                                                    <p>
+                                                        Started on <time datetime="2020-01-07">Feb 15, 2023</time>
+                                                    </p>
+                                                </div>
+                                                <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
+                                                    <i class="fas fa-clock flex-shrink-0 mr-1.5 text-gray-400"></i>
+                                                    <p>
+                                                        Delivery Time: 7:30 PM - 8:30 PM
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                                <i class="fas fa-map-marker-alt flex-shrink-0 mr-1.5 text-gray-400"></i>
+                                                <p>
+                                                    45B, HSR Layout, Bangalore
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Menu Tab Content -->
+                    <div id="menu-tab" class="tab-content">
+                        <div class="bg-white shadow overflow-hidden sm:rounded-md p-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-lg font-medium text-gray-900">Your Menu Items</h3>
+                                <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    Add New Item
+                                </button>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div class="border rounded-md p-4 flex">
+                                    <div class="w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center">
+                                        <i class="fas fa-drumstick-bite text-gray-500 text-2xl"></i>
+                                    </div>
+                                    <div class="ml-4 flex-1">
+                                        <div class="flex justify-between">
+                                            <h4 class="text-md font-medium text-gray-900">North Indian Thali</h4>
+                                            <div class="flex space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-800">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-600 hover:text-red-800">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm text-gray-500 mt-1">₹120 per meal • Vegetarian</p>
+                                        <p class="text-sm text-gray-600 mt-1">2 Rotis, Rice, Dal, 2 Sabzi, Raita, Papad</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="border rounded-md p-4 flex">
+                                    <div class="w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center">
+                                        <i class="fas fa-leaf text-gray-500 text-2xl"></i>
+                                    </div>
+                                    <div class="ml-4 flex-1">
+                                        <div class="flex justify-between">
+                                            <h4 class="text-md font-medium text-gray-900">South Indian Platter</h4>
+                                            <div class="flex space-x-2">
+                                                <button class="text-blue-600 hover:text-blue-800">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-600 hover:text-red-800">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm text-gray-500 mt-1">₹150 per meal • Vegetarian</p>
+                                        <p class="text-sm text-gray-600 mt-1">Idli, Dosa, Sambar, Chutney, Upma, Rasam</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Tab Content -->
+                    <div id="analytics-tab" class="tab-content">
+                        <div class="bg-white shadow overflow-hidden sm:rounded-md p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-6">Business Performance</h3>
+                            
+                            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                                <div class="bg-white overflow-hidden shadow rounded-lg">
+                                    <div class="p-5">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
+                                                <i class="fas fa-users text-white"></i>
+                                            </div>
+                                            <div class="ml-5 w-0 flex-1">
+                                                <dl>
+                                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                                        Total Customers
+                                                    </dt>
+                                                    <dd>
+                                                        <div class="text-lg font-medium text-gray-900">
+                                                            42
+                                                        </div>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 px-5 py-3">
+                                        <div class="text-sm">
+                                            <a href="#" class="font-medium text-blue-700 hover:text-blue-900">
+                                                View all
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white overflow-hidden shadow rounded-lg">
+                                    <div class="p-5">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 bg-green-500 rounded-md p-3">
+                                                <i class="fas fa-chart-line text-white"></i>
+                                            </div>
+                                            <div class="ml-5 w-0 flex-1">
+                                                <dl>
+                                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                                        Monthly Revenue
+                                                    </dt>
+                                                    <dd>
+                                                        <div class="text-lg font-medium text-gray-900">
+                                                            ₹85,420
+                                                        </div>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 px-5 py-3">
+                                        <div class="text-sm">
+                                            <a href="#" class="font-medium text-blue-700 hover:text-blue-900">
+                                                View details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white overflow-hidden shadow rounded-lg">
+                                    <div class="p-5">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 bg-yellow-500 rounded-md p-3">
+                                                <i class="fas fa-star text-white"></i>
+                                            </div>
+                                            <div class="ml-5 w-0 flex-1">
+                                                <dl>
+                                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                                        Average Rating
+                                                    </dt>
+                                                    <dd>
+                                                        <div class="text-lg font-medium text-gray-900">
+                                                            4.8/5
+                                                        </div>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 px-5 py-3">
+                                        <div class="text-sm">
+                                            <a href="#" class="font-medium text-blue-700 hover:text-blue-900">
+                                                View reviews
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6">
+                                <h4 class="text-md font-medium text-gray-900 mb-4">Order Trends</h4>
+                                <div class="h-64 bg-gray-200 rounded-md flex items-center justify-center">
+                                    <span class="text-gray-500">Chart Placeholder: Order trends over time</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab Content -->
+                    <div id="settings-tab" class="tab-content">
+                        <div class="bg-white shadow overflow-hidden sm:rounded-md p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-6">Account Settings</h3>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h4 class="text-md font-medium text-gray-900">Business Information</h4>
+                                    <div class="mt-2 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                                        <div class="sm:col-span-3">
+                                            <label for="business-name" class="block text-sm font-medium text-gray-700">Business Name</label>
+                                            <div class="mt-1">
+                                                <input type="text" name="business-name" id="business-name" value="Annapurna Tiffin Services" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-3">
+                                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                            <div class="mt-1">
+                                                <input type="email" name="email" id="email" value="contact@annapurnatiffin.com" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-3">
+                                            <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                                            <div class="mt-1">
+                                                <input type="text" name="phone" id="phone" value="+91 98765 43210" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-3">
+                                            <label for="address" class="block text-sm font-medium text-gray-700">Business Address</label>
+                                            <div class="mt-1">
+                                                <input type="text" name="address" id="address" value="123, Food Street, Indiranagar, Bangalore" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h4 class="text-md font-medium text-gray-900">Banking Details</h4>
+                                    <div class="mt-2 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                                        <div class="sm:col-span-3">
+                                            <label for="account-name" class="block text-sm font-medium text-gray-700">Account Holder Name</label>
+                                            <div class="mt-1">
+                                                <input type="text" name="account-name" id="account-name" value="Rahul Sharma" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-3">
+                                            <label for="account-number" class="block text-sm font-medium text-gray-700">Account Number</label>
+                                            <div class="mt-1">
+                                                <input type="text" name="account-number" id="account-number" value="XXXX XXXX XXXX 4321" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-3">
+                                            <label for="ifsc" class="block text-sm font-medium text-gray-700">IFSC Code</label>
+                                            <div class="mt-1">
+                                                <input type="text" name="ifsc" id="ifsc" value="HDFC0001234" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                            </div>
+                                        </div>
+
+                                        <div class="sm:col-span-3">
+                                            <label for="bank-name" class="block text-sm font-medium text-gray-700">Bank Name</label>
+                                            <div class="mt-1">
+                                                <input type="text" name="bank-name" id="bank-name" value="HDFC Bank" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pt-5">
+                                    <div class="flex justify-end">
+                                        <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                            Cancel
+                                        </button>
+                                        <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                            Save Changes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    What Our Users Say
+                </h2>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+                    Hear from our satisfied customers and service providers.
+                </p>
+            </div>
+
+            <div class="mt-12 space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+                <!-- Customer Testimonials -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">Customers</h3>
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-lg shadow-md p-6 testimonial-card">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
+                                        <span class="text-xl font-medium text-blue-600">R</span>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900">Rajesh Kumar</h4>
+                                    <div class="mt-1 flex items-center">
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                    </div>
+                                    <p class="mt-2 text-gray-600">
+                                        "Being a bachelor working in IT, finding consistent good food was a challenge. TiffinConnect solved that problem for me. I've been using it for 6 months now and couldn't be happier!"
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-md p-6 testimonial-card">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
+                                        <span class="text-xl font-medium text-blue-600">P</span>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900">Priya Sharma</h4>
+                                    <div class="mt-1 flex items-center">
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star-half-alt text-yellow-400"></i>
+                                    </div>
+                                    <p class="mt-2 text-gray-600">
+                                        "As a working mom, I didn't have time to cook every day. TiffinConnect has been a lifesaver for my family. The meals are nutritious, and I love the variety of options available."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Provider Testimonials -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">Service Providers</h3>
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-lg shadow-md p-6 testimonial-card">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
+                                        <span class="text-xl font-medium text-blue-600">S</span>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900">Sanjana's Kitchen</h4>
+                                    <div class="mt-1 flex items-center">
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                    </div>
+                                    <p class="mt-2 text-gray-600">
+                                        "I started my tiffin service as a small home business. After joining TiffinConnect, my customer base has tripled! The platform makes it easy to manage orders and payments."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-md p-6 testimonial-card">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
+                                        <span class="text-xl font-medium text-blue-600">M</span>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-medium text-gray-900">Mom's Rasoi</h4>
+                                    <div class="mt-1 flex items-center">
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                        <i class="fas fa-star text-yellow-400"></i>
+                                    </div>
+                                    <p class="mt-2 text-gray-600">
+                                        "The dashboard makes it so easy to manage everything. I can update my menu, track orders, and see customer feedback all in one place. It's helped me grow my business significantly."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Customer App Preview -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    Customer Dashboard
+                </h2>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+                    Manage your subscriptions, track deliveries, and explore new tiffin services.
+                </p>
+            </div>
+
+            <div class="mt-12 bg-gray-100 rounded-lg shadow-md p-6">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                        <button class="customer-tab border-blue-500 text-blue-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="active">
+                            Active Subscriptions
+                        </button>
+                        <button class="customer-tab border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="history">
+                            Order History
+                        </button>
+                        <button class="customer-tab border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="profile">
+                            Profile Settings
+                        </button>
+                    </nav>
+                </div>
+
+                <div class="mt-6">
+                    <!-- Active Subscriptions Tab -->
+                    <div id="active-tab" class="customer-content active">
+                        <div class="bg-white shadow overflow-hidden sm:rounded-md">
+                            <ul class="divide-y divide-gray-200">
+                                <li>
+                                    <div class="px-4 py-4 sm:px-6">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0">
+                                                    <div class="h-12 w-12 rounded-full bg-gradient-to-r from-orange-400 to-pink-500 flex items-center justify-center">
+                                                        <i class="fas fa-utensils text-white"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-md font-medium text-blue-600">
+                                                        Annapurna Tiffin Services
+                                                    </div>
+                                                    <div class="text-sm text-gray-500">
+                                                        North Indian Vegetarian Plan
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-2 flex-shrink-0 flex">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Active
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                            <div>
+                                                <div class="sm:flex">
+                                                    <div class="flex items-center text-sm text-gray-500">
+                                                        <i class="fas fa-calendar-alt flex-shrink-0 mr-1.5 text-gray-400"></i>
+                                                        <p>
+                                                            Renewal on <time datetime="2023-03-15">Mar 15, 2023</time>
+                                                        </p>
+                                                    </div>
+                                                    <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
+                                                        <i class="fas fa-clock flex-shrink-0 mr-1.5 text-gray-400"></i>
+                                                        <p>
+                                                            Delivery: 12:30 PM - 1:30 PM
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2 flex items-center text-sm text-gray-500">
+                                                    <i class="fas fa-box flex-shrink-0 mr-1.5 text-gray-400"></i>
+                                                    <p>
+                                                        Next Delivery: Today
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-end space-x-3">
+                                                <button class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                                    Pause Delivery
+                                                </button>
+                                                <button class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                                    Modify Plan
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="px-4 py-4 sm:px-6">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0">
+                                                    <div class="h-12 w-12 rounded-full bg-gradient-to-r from-green-400 to-teal-500 flex items-center justify-center">
+                                                        <i class="fas fa-seedling text-white"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-md font-medium text-blue-600">
+                                                        FitFoodie Tiffins
+                                                    </div>
+                                                    <div class="text-sm text-gray-500">
+                                                        Keto Meal Plan (Weekend Only)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-2 flex-shrink-0 flex">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Active
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                            <div>
+                                                <div class="sm:flex">
+                                                    <div class="flex items-center text-sm text-gray-500">
+                                                        <i class="fas fa-calendar-alt flex-shrink-0 mr-1.5 text-gray-400"></i>
+                                                        <p>
+                                                            Renewal on <time datetime="2023-03-05">Mar 05, 2023</time>
+                                                        </p>
+                                                    </div>
+                                                    <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
+                                                        <i class="fas fa-clock flex-shrink-0 mr-1.5 text-gray-400"></i>
+                                                        <p>
+                                                            Delivery: 9:00 AM - 10:00 AM
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2 flex items-center text-sm text-gray-500">
+                                                    <i class="fas fa-box flex-shrink-0 mr-1.5 text-gray-400"></i>
+                                                    <p>
+                                                        Next Delivery: Saturday
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-end space-x-3">
+                                                <button class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                                    Pause Delivery
+                                                </button>
+                                                <button class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                                    Modify Plan
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="py-4 px-6 bg-gray-50 border-t border-gray-200">
+                                <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-500">Browse more tiffin services<span aria-hidden="true"> &rarr;</span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order History Tab -->
+                    <div id="history-tab" class="customer-content">
+                        <div class="bg-white shadow overflow-hidden sm:rounded-md">
+                            <div class="px-4 py-5 sm:p-6">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">Payment History</h3>
+                                <div class="mt-4 overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Date
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Provider
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Plan
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Amount
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Status
+                                                </th>
+                                                <th scope="col" class="relative px-6 py-3">
+                                                    <span class="sr-only">View</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-gray-200">
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    Feb 15, 2023
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm font-medium text-gray-900">Annapurna Tiffin Services</div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm text-gray-900">Monthly Subscription</div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    ₹2,500
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                        Paid
+                                                    </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <a href="#" class="text-blue-600 hover:text-blue-900">View Receipt</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    Feb 05, 2023
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm font-medium text-gray-900">FitFoodie Tiffins</div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm text-gray-900">Weekend Plan</div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    ₹1,200
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                        Paid
+                                                    </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <a href="#" class="text-blue-600 hover:text-blue-900">View Receipt</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    Jan 15, 2023
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm font-medium text-gray-900">Annapurna Tiffin Services</div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="text-sm text-gray-900">Monthly Subscription</div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    ₹2,500
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                        Paid
+                                                    </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <a href="#" class="text-blue-600 hover:text-blue-900">View Receipt</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Settings Tab -->
+                    <div id="profile-tab" class="customer-content">
+                        <div class="bg-white shadow overflow-hidden sm:rounded-md">
+                            <div class="px-4 py-5 sm:p-6">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Profile Information</h3>
+                                <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                                    <div class="sm:col-span-3">
+                                        <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="first-name" id="first-name" value="John" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-3">
+                                        <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="last-name" id="last-name" value="Doe" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-3">
+                                        <label for="user-email" class="block text-sm font-medium text-gray-700">Email</label>
+                                        <div class="mt-1">
+                                            <input type="email" name="user-email" id="user-email" value="john.doe@example.com" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-3">
+                                        <label for="phone-number" class="block text-sm font-medium text-gray-700">Phone number</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="phone-number" id="phone-number" value="+91 98765 43210" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-6">
+                                        <label for="delivery-address" class="block text-sm font-medium text-gray-700">Delivery Address</label>
+                                        <div class="mt-1">
+                                            <input type="text" name="delivery-address" id="delivery-address" value="12/A, Indiranagar, Bangalore - 560038" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-8">
+                                    <h4 class="text-md font-medium text-gray-900 mb-4">Payment Methods</h4>
+                                    <div class="bg-gray-50 p-4 rounded-md mb-4 border border-gray-200">
+                                        <div class="flex justify-between items-center">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-credit-card text-gray-500 mr-3"></i>
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">HDFC Credit Card</div>
+                                                    <div class="text-sm text-gray-500">Ending with 4321</div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                    Default
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Add Payment Method
+                                    </button>
+                                </div>
+
+                                <div class="mt-8 flex justify-end">
+                                    <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-12 bg-blue-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:flex lg:items-center lg:justify-between">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                        <span class="block">Ready to start enjoying homemade meals?</span>
+                        <span class="block text-blue-200">Join TiffinConnect today!</span>
+                    </h2>
+                    <p class="mt-3 max-w-md text-lg text-blue-100 sm:mt-5">
+                        Sign up for free and discover the best tiffin services in your area. Start your journey to convenient, healthy, and delicious meals.
+                    </p>
+                    <div class="mt-8 flex space-x-4">
+                        <button id="cta-login-button" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-blue-600 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-600 focus:ring-white">
+                            Sign Up Now
+                        </button>
+                        <button class="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-md shadow-sm text-white bg-transparent hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-600 focus:ring-white">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-8 lg:mt-0 lg:w-1/2 lg:flex lg:justify-end">
+                    <div class="bg-white rounded-lg shadow-md p-6 max-w-md">
+                        <h3 class="text-xl font-medium text-gray-900 mb-4">Join Our Newsletter</h3>
+                        <p class="text-gray-600 mb-4">Get updates on new tiffin providers, special offers, and healthy eating tips.</p>
+                        <form class="space-y-4">
+                            <div>
+                                <label for="newsletter-email" class="sr-only">Email</label>
+                                <input type="email" name="newsletter-email" id="newsletter-email" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Your email address">
+                            </div>
+                            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                <div class="space-y-8 xl:col-span-1">
+                    <div class="flex items-center">
+                        <span class="text-2xl font-bold text-white">Tiffin<span class="text-blue-400">Connect</span></span>
+                    </div>
+                    <p class="text-gray-300 text-base">
+                        Connecting food lovers with authentic homemade meals from local tiffin services.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-gray-300">
+                            <span class="sr-only">Facebook</span>
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300">
+                            <span class="sr-only">Instagram</span>
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300">
+                            <span class="sr-only">Twitter</span>
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-300">
+                            <span class="sr-only">YouTube</span>
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-200 tracking-wider uppercase">
+                                For Customers
+                            </h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        How it Works
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Find Tiffin Services
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Pricing Plans
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Customer Support
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold text-gray-200 tracking-wider uppercase">
+                                For Providers
+                            </h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Join as Provider
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Provider Guidelines
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Resources
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Success Stories
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-200 tracking-wider uppercase">
+                                Company
+                            </h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        About Us
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Blog
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Careers
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Press
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-12 md:mt-0">
+                            <h3 class="text-sm font-semibold text-gray-200 tracking-wider uppercase">
+                                Legal
+                            </h3>
+                            <ul class="mt-4 space-y-4">
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Privacy Policy
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Terms of Service
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Cookie Policy
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-base text-gray-400 hover:text-gray-300">
+                                        Refund Policy
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-700 pt-8">
+                <p class="text-base text-gray-400 xl:text-center">
+                    &copy; 2023 TiffinConnect. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login/Signup Modal -->
+    <div id="login-modal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                    Login to your account
+                                </h3>
+                                <button type="button" id="close-login-modal" class="text-gray-400 hover:text-gray-500">
+                                    <span class="sr-only">Close</span>
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="mt-2">
+                                <div>
+                                    <div class="flex justify-center border-b border-gray-200">
+                                        <button type="button" class="login-tab py-4 px-6 border-b-2 border-blue-500 font-medium text-sm text-blue-600 focus:outline-none" data-tab="login">
+                                            Login
+                                        </button>
+                                        <button type="button" class="login-tab py-4 px-6 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none" data-tab="signup">
+                                            Sign Up
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Login Form -->
+                                <div id="login-form" class="login-content active mt-6">
+                                    <form class="space-y-6">
+                                        <div>
+                                            <label for="login-email" class="block text-sm font-medium text-gray-700">
+                                                Email address
+                                            </label>
+                                            <div class="mt-1">
+                                                <input id="login-email" name="email" type="email" autocomplete="email" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label for="login-password" class="block text-sm font-medium text-gray-700">
+                                                Password
+                                            </label>
+                                            <div class="mt-1">
+                                                <input id="login-password" name="password" type="password" autocomplete="current-password" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center">
+                                                <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                                <label for="remember-me" class="ml-2 block text-sm text-gray-900">
+                                                    Remember me
+                                                </label>
+                                            </div>
+
+                                            <div class="text-sm">
+                                                <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+                                                    Forgot your password?
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                                Sign in
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- Signup Form -->
+                                <div id="signup-form" class="login-content mt-6">
+                                    <form class="space-y-6">
+                                        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+                                            <div>
+                                                <label for="first-name" class="block text-sm font-medium text-gray-700">
+                                                    First name
+                                                </label>
+                                                <div class="mt-1">
+                                                    <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <label for="last-name" class="block text-sm font-medium text-gray-700">
+                                                    Last name
+                                                </label>
+                                                <div class="mt-1">
+                                                    <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label for="signup-email" class="block text-sm font-medium text-gray-700">
+                                                Email address
+                                            </label>
+                                            <div class="mt-1">
+                                                <input id="signup-email" name="email" type="email" autocomplete="email" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="phone" class="block text-sm font-medium text-gray-700">
+                                                Phone number
+                                            </label>
+                                            <div class="mt-1">
+                                                <input id="phone" name="phone" type="tel" autocomplete="tel" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label for="signup-password" class="block text-sm font-medium text-gray-700">
+                                                Password
+                                            </label>
+                                            <div class="mt-1">
+                                                <input id="signup-password" name="password" type="password" autocomplete="new-password" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-center">
+                                            <input id="agree-terms" name="agree-terms" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                            <label for="agree-terms" class="ml-2 block text-sm text-gray-900">
+                                                I agree to the <a href="#" class="text-blue-600 hover:text-blue-500">Terms of Service</a> and <a href="#" class="text-blue-600 hover:text-blue-500">Privacy Policy</a>
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                                Create Account
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Provider Signup Modal -->
+    <div id="provider-signup-modal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="provider-modal-title">
+                                    Register as a Tiffin Service Provider
+                                </h3>
+                                <button type="button" id="close-provider-modal" class="text-gray-400 hover:text-gray-500">
+                                    <span class="sr-only">Close</span>
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="mt-2">
+                                <form class="space-y-6">
+                                    <div>
+                                        <label for="business-name" class="block text-sm font-medium text-gray-700">
+                                            Business Name
+                                        </label>
+                                        <div class="mt-1">
+                                            <input id="business-name" name="business-name" type="text" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="business-type" class="block text-sm font-medium text-gray-700">
+                                            Business Type
+                                        </label>
+                                        <div class="mt-1">
+                                            <select id="business-type" name="business-type" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                                                <option>Home Kitchen</option>
+                                                <option>Small Restaurant</option>
+                                                <option>Catering Service</option>
+                                                <option>Cloud Kitchen</option>
+                                                <option>Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="cuisine-specialty" class="block text-sm font-medium text-gray-700">
+                                            Cuisine Specialty
+                                        </label>
+                                        <div class="mt-1">
+                                            <select id="cuisine-specialty" name="cuisine-specialty" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                                                <option>North Indian</option>
+                                                <option>South Indian</option>
+                                                <option>Gujarati</option>
+                                                <option>Bengali</option>
+                                                <option>Punjabi</option>
+                                                <option>Multi-Cuisine</option>
+                                                <option>Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="contact-person" class="block text-sm font-medium text-gray-700">
+                                            Contact Person
+                                        </label>
+                                        <div class="mt-1">
+                                            <input id="contact-person" name="contact-person" type="text" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="contact-email" class="block text-sm font-medium text-gray-700">
+                                            Email
+                                        </label>
+                                        <div class="mt-1">
+                                            <input id="contact-email" name="contact-email" type="email" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="contact-phone" class="block text-sm font-medium text-gray-700">
+                                            Phone
+                                        </label>
+                                        <div class="mt-1">
+                                            <input id="contact-phone" name="contact-phone" type="tel" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label for="business-address" class="block text-sm font-medium text-gray-700">
+                                            Business Address
+                                        </label>
+                                        <div class="mt-1">
+                                            <textarea id="business-address" name="business-address" rows="3" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <input id="agree-provider-terms" name="agree-provider-terms" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                        <label for="agree-provider-terms" class="ml-2 block text-sm text-gray-900">
+                                            I agree to the <a href="#" class="text-blue-600 hover:text-blue-500">Provider Terms</a> and <a href="#" class="text-blue-600 hover:text-blue-500">Privacy Policy</a>
+                                        </label>
+                                    </div>
+
+                                    <div>
+                                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                            Submit Application
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Provider Dashboard Tabs
+        const dashboardTabs = document.querySelectorAll('.dashboard-tab');
+        dashboardTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                dashboardTabs.forEach(t => {
+                    t.classList.remove('border-blue-500', 'text-blue-600');
+                    t.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                });
+                
+                // Add active class to current tab
+                this.classList.add('border-blue-500', 'text-blue-600');
+                this.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show current tab content
+                const tabName = this.getAttribute('data-tab');
+                document.getElementById(`${tabName}-tab`).classList.add('active');
+            });
+        });
+
+        // Customer Dashboard Tabs
+        const customerTabs = document.querySelectorAll('.customer-tab');
+        customerTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                customerTabs.forEach(t => {
+                    t.classList.remove('border-blue-500', 'text-blue-600');
+                    t.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                });
+                
+                // Add active class to current tab
+                this.classList.add('border-blue-500', 'text-blue-600');
+                this.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                
+                // Hide all tab contents
+                document.querySelectorAll('.customer-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show current tab content
+                const tabName = this.getAttribute('data-tab');
+                document.getElementById(`${tabName}-tab`).classList.add('active');
+            });
+        });
+
+        // Login/Signup Modal
+        const loginModal = document.getElementById('login-modal');
+        const loginButtons = [document.getElementById('login-button'), document.getElementById('cta-login-button')];
+        const closeLoginModal = document.getElementById('close-login-modal');
+        
+        loginButtons.forEach(button => {
+            if (button) {
+                button.addEventListener('click', function() {
+                    loginModal.classList.remove('hidden');
+                });
+            }
+        });
+        
+        if (closeLoginModal) {
+            closeLoginModal.addEventListener('click', function() {
+                loginModal.classList.add('hidden');
+            });
+        }
+
+        // Provider Signup Modal
+        const providerModal = document.getElementById('provider-signup-modal');
+        const providerSignupButton = document.getElementById('provider-signup-button');
+        const closeProviderModal = document.getElementById('close-provider-modal');
+        
+        if (providerSignupButton) {
+            providerSignupButton.addEventListener('click', function() {
+                providerModal.classList.remove('hidden');
+            });
+        }
+        
+        if (closeProviderModal) {
+            closeProviderModal.addEventListener('click', function() {
+                providerModal.classList.add('hidden');
+            });
+        }
+
+        // Login/Signup Form Tabs
+        const loginTabs = document.querySelectorAll('.login-tab');
+        loginTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                loginTabs.forEach(t => {
+                    t.classList.remove('border-blue-500', 'text-blue-600');
+                    t.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                });
+                
+                // Add active class to current tab
+                this.classList.add('border-blue-500', 'text-blue-600');
+                this.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                
+                // Hide all form contents
+                document.querySelectorAll('.login-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show current form content
+                const tabName = this.getAttribute('data-tab');
+                document.getElementById(`${tabName}-form`).classList.add('active');
+            });
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === loginModal) {
+                loginModal.classList.add('hidden');
+            }
+            if (event.target === providerModal) {
+                providerModal.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
